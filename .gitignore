@@ -1,0 +1,7 @@
+dqib_arm64-virt/image.qcow2
+dqib_arm64-virt/initrd
+dqib_arm64-virt/kernel
+dqib_arm64-virt/readme.txt
+dqib_arm64-virt/ssh_user_ecdsa_key
+dqib_arm64-virt/ssh_user_ed25519_key
+dqib_arm64-virt/ssh_user_rsa_key
