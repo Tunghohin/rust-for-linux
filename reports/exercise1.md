@@ -38,7 +38,7 @@ bear -- make ARCH=arm64 LLVM=1 -j12 # 顺便生成 compile_commands.json
 #### 4. 获取 dqib 系统镜像
 
 ```sh
-wget https://gitlab.com/api/v4/projects/giomasce%2Fdqib/jobs/artifacts/master/download?job=convert_arm64-virt
+https://people.debian.org/~gio/dqib/
 ```
 
 使用脚本运行 qemu
