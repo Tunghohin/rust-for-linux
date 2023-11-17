@@ -24,7 +24,6 @@ qemu-img create -f raw rootfs.img 3G
 mkfs.ext4 rootfs.img
 sudo mkdir /mnt/rootfs
 sudo mount -o loop rootfs.img /mnt/rootfs
-sudo umount /mnt/rootfs
 ```
 
 安装 debian 镜像
