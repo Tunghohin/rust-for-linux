@@ -3,7 +3,7 @@
 #### 1. 获取源码
 
 ```sh
-git clone https://github.com/Rust-for-Linux/linux -b rust-dev --depth-1
+git clone https://github.com/Rust-for-Linux/linux -b rust-dev --depth=1
 ```
 
 #### 2. 安装依赖
