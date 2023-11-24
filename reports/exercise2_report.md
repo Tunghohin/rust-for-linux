@@ -37,7 +37,7 @@ sudo debootstrap --arch arm64 stable /mnt/rootfs https://mirrors.tuna.tsinghua.e
 #### 2. rust-analyzer
 
 ```sh
-make LLVM=1 rust-analyzer
+make LLVM=1 ARCH=arm64 rust-analyzer
 ```
 
 #### 3. deboostrap 下载慢
