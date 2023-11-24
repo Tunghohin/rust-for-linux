@@ -29,8 +29,8 @@ sudo apt install clang llvm
 #### 3. 编译 linux 内核
 
 ```sh
-make ARCH=arm64 LLVM=1 O=build defconfig
-make ARCH=arm64 LLVM=1 O=build menuconfig # general setup 里打开 rust support
+make ARCH=arm64 LLVM=1 defconfig
+make ARCH=arm64 LLVM=1 menuconfig # general setup 里打开 rust support
 cd ./build
 bear -- make ARCH=arm64 LLVM=1 -j12 # 顺便生成 compile_commands.json
 ```
