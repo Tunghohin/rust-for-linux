@@ -20,7 +20,7 @@ sudo apt-get install debootstrap qemu-utils
 创建磁盘镜像文件格式化并挂载
 
 ```sh
-qemu-img create -f raw rootfs.img 3G
+qemu-img create -f raw rootfs.img 4G
 mkfs.ext4 rootfs.img
 sudo mkdir /mnt/rootfs
 sudo mount -o loop rootfs.img /mnt/rootfs
