@@ -26,12 +26,12 @@ C 版本 struct blk_mq_tag_set
 
 ```c
 struct blk_mq_tag_set {
-    struct blk_mq_ops *ops;      /* 操作函数指针 */
-    unsigned int flags;          /* 标志位 */
-    unsigned int nr_hw_queues;    /* 硬件队列数量 */
-    unsigned int queue_depth;     /* 每个队列的深度（即队列标签的数量） */
-    struct request_queue *queue;  /* 关联的请求队列 */
-    void *driver_data;            /* 驱动程序私有数据指针 */
+    struct blk_mq_ops *ops;      // 操作函数指针
+    unsigned int flags;          // 标志位
+    unsigned int nr_hw_queues;    // 硬件队列数量
+    unsigned int queue_depth;     // 每个队列的深度（即队列标签的数量） */
+    struct request_queue *queue;  // 关联的请求队列
+    void *driver_data;            // 驱动程序私有数据指针
     ...
 };
 ```
@@ -62,6 +62,10 @@ pub struct TagSet<T: Operations> {
 #[macro::vtable]
 pub trait Operations: Sized {
     ... //以commit_rqs为例
+    type HwData: ForeignOwnable;
+
+    ...
+
     fn commit_rqs(
         hw_data: <Self::HwData as ForeignOwnable>::Borrowed<'_>,
         queue_data: <Self::QueueData as ForeignOwnable>::Borrowed<'_>,
@@ -100,9 +104,13 @@ impl<T: Operations> OperationsVtable<T> {
 }
 ```
 
+其中 types::ForeignOwnable 表示可用于 C 于 rust 之间的资源所有权转移
+
 ### bio
 
 在 Linux 内核中，struct bio 是用于表示块 I/O 操作的结构体。这个结构体包含了有关块 I/O 操作的重要信息，比如要执行的操作、数据缓冲区的位置等。
+
+struct bio 通常涉及到一个或多个 struct bio_vec，它们描述了块 I/O 操作的数据块的位置和大小。struct bio_vec 中包含了指向数据缓冲区的指针、偏移量和长度。
 
 ```c
 struct bio {
@@ -152,3 +160,7 @@ impl<'a> core::iter::Iterator for BioIterator<'a> {
    }
 }
 ```
+
+### 驱动
+
+待续
