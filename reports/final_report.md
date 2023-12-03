@@ -102,4 +102,53 @@ impl<T: Operations> OperationsVtable<T> {
 
 ### bio
 
-未完待续
+在 Linux 内核中，struct bio 是用于表示块 I/O 操作的结构体。这个结构体包含了有关块 I/O 操作的重要信息，比如要执行的操作、数据缓冲区的位置等。
+
+```c
+struct bio {
+    struct bio *bi_next;         // 链表中的下一个 bio 结构体
+    struct block_device *bi_bdev; // 目标块设备
+    unsigned long bi_flags;       // 标志位，用于描述 I/O 操作的状态
+    bio_flags_t bi_rw;            // 读写标志位，指示是读操作还是写操作
+    unsigned short bi_vcnt;       // 向量个数，用于描述 bio 中的数据块数量
+    unsigned short bi_idx;        // 当前处理的数据块索引
+    unsigned int bi_size;         // 数据块大小
+    unsigned int bi_iter.bi_sector; // 起始扇区号
+    struct bio_vec bi_io_vec;     // 包含数据缓冲区的信息
+    struct bio_set *bi_pool;      // 内存池指针
+    ...
+};
+```
+
+在 rust 里，依然采用指针的形式对其进行封装，但是值得注意的是，采用了 NonNull 指针，而非裸指针
+
+```rust
+pub struct Bio<'a>(
+    NonNull<crate::bindings::bio>,
+    core::marker::PhantomData<&'a ()>,
+);
+```
+
+NonNull 通常与裸指针一起使用，把裸指针 wrap 一层，NonNull 在类型层面上确保了指针非空，减少了犯错的概率。
+
+bio 类似链表节点，我们可以对其进行 Iterator trait 的封装，使迭代更安全。
+
+```rust
+pub struct BioIterator<'a> {
+   pub(crate) bio: Option<Bio<'a>>,
+}
+
+impl<'a> core::iter::Iterator for BioIterator<'a> {
+   type Item = Bio<'a>;
+
+   #[inline(always)]
+   fn next(&mut self) -> Option<Bio<'a>> {
+       if let Some(current) = self.bio.take() {
+           self.bio = current.next();
+           Some(current)
+       } else {
+           None
+       }
+   }
+}
+```
