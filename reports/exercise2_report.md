@@ -64,6 +64,10 @@ iface eth0 inet dhcp
 
 同时在 qemu 里根文件指定路径后添加 rw
 
+#### 6. bad block checksum
+
+fsck.ext4 -y ./rootfs.img
+
 ## 运行结果
 
 <img src="./imgs/Screenshot from 2023-11-09 10-10-02.png">
