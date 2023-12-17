@@ -69,7 +69,9 @@ iface eth0 inet dhcp
 fsck.ext4 -y ./rootfs.img
 
 #### 7. v6.1.66编译失败
-
+```
+sudo apt install librust-clang-sys+libloading-dev
+```
 
 ## 运行结果
 ```sh
