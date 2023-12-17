@@ -68,6 +68,10 @@ iface eth0 inet dhcp
 
 fsck.ext4 -y ./rootfs.img
 
+#### 7. v6.1.66编译失败
+![Screenshot from 2023-12-17 14-35-35](https://github.com/Tunghohin/rust-for-linux/assets/88049360/13372600-47c8-4f8c-90b3-9dc2f2cb981a)
+
+
 ## 运行结果
 
 <img src="./imgs/Screenshot from 2023-11-09 10-10-02.png">
